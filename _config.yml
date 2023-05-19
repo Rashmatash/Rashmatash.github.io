@@ -1,0 +1,11 @@
+title: Game Engine Programming Blog
+description: This is a sporadic blog for game engine stuff I find worth discussing.
+remote_theme: pages-themes/midnight@v0.2.0
+plugins:
+  - jekyll-remote-theme
+  - jekyll-relative-links
+relative_links:
+  enabled: true
+  collections: true
+include:
+  - index.md
