@@ -40,7 +40,7 @@ approach, the frustum grid is constructed using a separate compute step. The fou
 written into a buffer which is then accessed by the light culling compute shader. In the culling step,
 interlocked min/max instructions are used to determine the minimum and maximum depth for each tile. Next,
 we loop through the list of lights and check each light against the six planes of the frustum. The two light types
-that are implemented are point lights and spotlights. Because of their limited range, these light rarely affect
+that are implemented are point lights and spotlights. Because of their limited range, these lights rarely affect
 everything in view of the camera, and therefore, can be culled from tiles where they have no effect.
 
 Point lights are culled using six sphere-plane intersection tests. Spotlights are culled using six cone-plane
@@ -295,8 +295,12 @@ intersection function, for this specific use-case, because of the following reas
 1) The frustums used in light culling have a narrow angle which minimizes the intersection error. For an HD resolution,
 32 pixel tiles and a vertical field of view of about 60 degrees, each frustum has a half angle of 0.9 degrees. This
 hardly makes any difference in the point where the sphere really touches the cone versus our approximation.
+
+
 2) The cone is already a loose fit for the actual frustum. Except for frustum edges, the cone is always a bit larger
 which means that spheres touch the cone before they touch the frustum.
+
+
 3) Even if the intersection function just barely misses (i.e. a false negative), it happens at the very end of the light's
 effective range, where the light intensity is next to zero and imperceptible.
 
@@ -431,8 +435,6 @@ if (lightCount != 0 && depth != 0)
 
         for (i = 0; i < lightCount; ++i)
         {
-            if (_lightFlags[i] != 0) continue;
-
             index = _lightIndexList[i];
             LightCullingLightInfo light = Lights[index];
             const float3 d = pos - light.Position;
