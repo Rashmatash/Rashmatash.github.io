@@ -9,7 +9,7 @@ of the screen, it's most likely that the geometry rendered in a tile is only aff
 number of lights within the scene. The process of excluding all lights that don't affect the geometry
 within each tile is called tile-based light culling.
 
-![Grid frustums](images/2305-grid-frustums.png)   
+[![Grid frustums](images/2305-grid-frustums.png)](images/2305-grid-frustums.png)   
 <sup>Figure 1: The screen space is divided in a grid which is used to bin lights that intersect each tile frustum.</sup>
 
 The list of lights for each tile can be used in a pixel shader while rendering the geometry. 
@@ -83,11 +83,11 @@ The rendering is done using a single thread on an AMD Ryzen 3950X and RTX 2070 S
 sizes are small to average (1 to 5 meters). About half of the lights is a point light and the other half is
 spotlight.
 
-![Base light culling performance](images/2305-base-light-culling-performance.png)    
+[![Base light culling performance](images/2305-base-light-culling-performance.png)](images/2305-base-light-culling-performance.png)    
 <sup>Figure 2: Total frame time in milliseconds (vertical axis) as a function of light count (horizontal axis)
 for the base implementation.</sup>
 
-![Test scene @4K](images/2305-test-scene.png)   
+[![Test scene @4K](images/2305-test-scene.png)](images/2305-test-scene.png)   
 <sup>Figure 3: Test scene rendered with directional lights only.</sup>
 
 ![Base light culling 18k lights @4K](images/2305-base-18k-lights-4k.png)   
