@@ -90,13 +90,13 @@ for the base implementation.</sup>
 [![Test scene @4K](images/2305-test-scene.png)](images/2305-test-scene.png)   
 <sup>Figure 3: Test scene rendered with directional lights only.</sup>
 
-![Base light culling 18k lights @4K](images/2305-base-18k-lights-4k.png)   
+[![Base light culling 18k lights @4K](images/2305-base-18k-lights-4k.png)](images/2305-base-18k-lights-4k.png)   
 <sup>Figure 4: Light count heatmap of 18000 lights at 4K resolution for base implementation.</sup>
 
-![Base light culling 64k lights @4K](images/2305-base-64k-lights-4k.png)   
+[![Base light culling 64k lights @4K](images/2305-base-64k-lights-4k.png)](images/2305-base-64k-lights-4k.png)   
 <sup>Figure 5: Light count heatmap of 64000 lights at 4K resolution for base implementation.</sup>
 
-![Test scene with lights @4K](images/2305-test-scene-lights.png)   
+[![Test scene with lights @4K](images/2305-test-scene-lights.png)](images/2305-test-scene-lights.png)   
 <sup>Figure 6: Test scene rendered with 64000 point lights and spotlights in the scene volume.</sup>
 
 As expected, large numbers of lights can be used within a scene without slowing down too much. One question
@@ -203,7 +203,7 @@ which is computationally more expensive. Also, a cone is not a great bounding vo
 are more like a section of a sphere rather than a cone (see figure 7). This leads either to artifacts for wide
 cone angles or large amount of false positives.
 
-![Bounding cones](images/2305-bounding-cone.png)   
+[![Bounding cones](images/2305-bounding-cone.png)](images/2305-bounding-cone.png)   
 <sup>Figure 7: Using a cone as bounding volume for spotlights works best if spotlight cone angle is less than
 90 degrees (left). Taking the base height of the spotlight would result in a partial bounding volume (center).
 Using the spotlight cone angle directly would result in very large bounding cones with a lot of false positive
@@ -223,7 +223,7 @@ this method of intersection testing effectively generates a screen-space boundin
 including it in tiles where the light has no effect. Consequently, the pixel shader will perform unnecessary lighting
 calculations, negatively impacting the performance.
 
-![Intersection false positive](images/2305-intersection-false-positive.png)   
+[![Intersection false positive](images/2305-intersection-false-positive.png)](images/2305-intersection-false-positive.png)   
 <sup>Figure 8: The bounding sphere is entirely on the positive half space of planes A and B. It's also partially in
 the positive half space of planes C and D. Therefore, it's accepted as a light that intersects the frustum
 (green square), while it clearly doesn't.</sup>
@@ -240,7 +240,7 @@ lights that intersect a frustum are included, even if they didn't affect any geo
 example, when there are large empty spaces between objects in the direction of the camera. In other words, lights are
 incorrectly included in a tile when there are large depth discontinuities in a tile (see figure 9).
 
-![Depth discontinuity false positive](images/2305-depth-false-positive.png)   
+[![Depth discontinuity false positive](images/2305-depth-false-positive.png)](images/2305-depth-false-positive.png)   
 <sup>Figure 9: The yellow lights are culled since they don't intersect with any frustum. The green lights are kept and
 they do actually affect visible geometry. The red lights are also kept, but they don't lit any geometry. These are
 false positives due to depth discontinuity.</sup>
@@ -256,7 +256,7 @@ construct a grid using overlapping circles instead of tiles. In view space, the 
 from camera's position. The idea is that, because we're not dealing with planes anymore, we could hopefully do better
 intersection testing with fewer false positives.
 
-![Circle tiles](images/2305-circle-tiles.png)   
+[![Circle tiles](images/2305-circle-tiles.png)](images/2305-circle-tiles.png)   
 <sup>Figure 10: We can try using circles that envelope each tile. These circles will extend to cones in 3D space.</sup>
 
 Having cones instead of frustums means that now we have to do cone-sphere and cone-cone intersection testing for point
@@ -277,7 +277,7 @@ axis (M), we can scale the base diameter to get the radius of the cone circle (r
 intersects the cone if the sphere and the cone circle touch or overlap. We can simply test this by adding the sphere radius
 and cone circle's radius and comparing the result to sphere's distance (D) from the cone axis.
 
-![Sphere-cone intersection](images/2305-sphere-cone-intersection.png)   
+[![Sphere-cone intersection](images/2305-sphere-cone-intersection.png)](images/2305-sphere-cone-intersection.png)   
 <sup>Figure 11: Sphere intersects cone if $D \le C_r + r$</sup>
 
 Looking closely at the intersection of a sphere with a cone as depicted in figure 12, shows us that the point where
@@ -285,7 +285,7 @@ the sphere touches the cone mantel is not directly on the line from sphere's cen
 This is more evident if we look at a cone with a wider angle. As a result, the sphere could be touching the cone,
 while our intersection function's result is negative.
 
-![Sphere-cone correct intersection](images/2305-sphere-cone-correct-intersection.png)   
+[![Sphere-cone correct intersection](images/2305-sphere-cone-correct-intersection.png)](images/2305-sphere-cone-correct-intersection.png)   
 <sup>Figure 12: Correct sphere-cone intersection. The sphere touches the cone at point T. Note that the deviation from
 our approximation is reduced as cone's half angle $\alpha$ gets smaller.</sup>
 
@@ -641,15 +641,15 @@ for base implementation is brighter (more red), which means that the average num
 of the false positives, mostly as a result of plane intersection testing. The total frame times for both implementations
 are shown in the graph.
 
-![Sphere-cone intersection](images/2305-cone-frustum-no-prune-4k.png)   
+[![Sphere-cone intersection](images/2305-cone-frustum-no-prune-4k.png)](images/2305-cone-frustum-no-prune-4k.png)   
 <sup>Figure 13: Cone frustum culling without any extra culling for false positives (left) vs base implementation (right).
 Note that even without per-pixel culling, our method results in fewer lights per tile (fewer red tiles).</sup>
 
-![Sphere-cone intersection](images/2305-cone-frustum-prune-4k.png)   
+[![Sphere-cone intersection](images/2305-cone-frustum-prune-4k.png)](images/2305-cone-frustum-prune-4k.png)   
 <sup>Figure 14: Cone frustum culling with extra culling for false positives (left) vs base implementation (right).
 Extra culling results in tiles that only include lights that affect one or more pixels within the tile.</sup>
 
-![Base vs Primal performance](images/2305-base-vs-primal-light-culling-performance.png)   
+[![Base vs Primal performance](images/2305-base-vs-primal-light-culling-performance.png)](images/2305-base-vs-primal-light-culling-performance.png)   
 <sup>Figure 15: Total frame time of base method and Primal implementation (including the extra culling).</sup>
 
 ## Conclusion
