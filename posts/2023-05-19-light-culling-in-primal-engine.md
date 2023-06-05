@@ -572,7 +572,7 @@ void CullLightsCS(ComputeShaderInput csIn)
 
     GroupMemoryBarrierWithGroupSync();
 
-    const uint lightCount = min(_lightCount, MaxLightsPerGroup - 1);
+    const uint lightCount = min(_lightCount, MaxLightsPerGroup);
 
     if (lightCount != 0 && depth != 0)
     {
