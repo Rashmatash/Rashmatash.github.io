@@ -385,7 +385,7 @@ Sphere CalculateConeBoundingSphere(float3 lightPostion, float3 lightDirection,
     }
     else
     {
-        sphere.Center = tip + coneCos * direction;
+        sphere.Center = tip + coneCos * range * direction;
         const float coneSin{ sqrt(1.f - coneCos * coneCos) };
         sphere.Radius = coneSin * range;
     }
